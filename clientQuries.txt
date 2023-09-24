@@ -1,0 +1,54 @@
+-------------------------
+query getAllUsers{
+  users{
+    id
+    firstName
+    lastName
+    email
+  }
+}
+
+---------------------------
+query getUserById{
+  user(id: "1"){
+    id
+    firstName
+    lastName
+    email
+  }
+}
+
+---Passing Id as a variable--
+query getUserById($userid:ID!){
+  user(id:$userid){
+    id
+    firstName
+    lastName
+    email
+  }
+}
+
+-----------------------------
+query getQuotesById{
+  quote(by: "2"){
+    by
+    name
+  }
+}
+
+---Passing Id as a variable---
+query getQuotesById($userQuoteId: ID!){
+  quote(by: $userQuoteId){
+    by
+    name
+  }
+}
+
+------------------------
+query getAllQuotes{
+  quotes{
+    name
+    by
+  }
+}
+

@@ -1,0 +1,28 @@
+import { ApolloServer, gql } from 'apollo-server'
+
+import { ApolloServerPluginLandingPageGraphQLPlayground} from 'apollo-server-core'//playground
+
+const typeDefs = gql `
+type Query {
+    greet:String
+}
+`
+
+const resolvers = {
+    Query: {
+        greet:() => "Hello Naziya"
+    }
+}
+
+const server = new ApolloServer({
+    typeDefs,
+    resolvers,
+    plugins:[
+        ApolloServerPluginLandingPageGraphQLPlayground()
+    ]
+})
+
+server.listen(8000).then(({url}) =>console.log(`Server Ready At ${url}`))
+
+//get request : query
+//restapi(post,put,delete) : Mutations
