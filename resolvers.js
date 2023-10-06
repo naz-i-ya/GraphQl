@@ -16,7 +16,7 @@ const resolvers = {
         iquote:(_,{by}) => quotes.filter(quote => quote.by == by)*/
         users: async() => await User.find({}),
         user: async(_, {_id}) => await User.findOne({_id}),
-        quotes: async() => await Quote.find({}),
+        quotes: async() => await Quote.find({}).populate("by", "_id firstName"),
         iquote: async(_,{by}) => await Quote.find({by})
     },
     User:{
@@ -41,11 +41,11 @@ const resolvers = {
            
         },
         signinUser: async(_, {signInUser}) => {
-            const user = await User.findOne({email: userSignIn.email})
+            const user = await User.findOne({email: signInUser.email})
             if(!user){
                 throw new Error("User doesnot exist with that email")
             }
-            const doMatch = await bcrypt.compare(userSignIn.password, user.password)
+            const doMatch = await bcrypt.compare(signInUser.password, user.password)
 
             if(!doMatch){
                 throw new Error("email or password is invalid");
@@ -63,8 +63,7 @@ const resolvers = {
             })
             await newQuote.save()
             return 'Quote saved successfully'
-        }
-
+        } 
     }
 }
 
